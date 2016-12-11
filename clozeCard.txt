@@ -1,0 +1,1 @@
+[{"cloze":"ABBA","rest":"...is a 70's group from Sweden?"},{"cloze":"ABBA","rest":"...is a 70's group from Sweden?"},{"cloze":"ABBA","rest":"...is a 70's group from Sweden?"}]
