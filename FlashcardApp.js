@@ -85,7 +85,6 @@ function getCardInfo(whichTypeOfCard){
     }
     else{
         writeToFile();
-        mainMenu();
     }
 
 }
@@ -106,15 +105,30 @@ function addClozeToDeck(item){
 
 function writeToFile(){
     console.log(JSON.parse(JSON.stringify(deck.getCards())));
-    
+    fs.appendFile("cards.txt",JSON.stringify(deck.getCards()), function(err){
+        if(err){
+            console.log("Flash card write error: " + err);
+            process.exit(1);
+        }
+    mainMenu();
+    });
 }
 
 
 function readCards()
 {
+        fs.readFile("cards.txt", "utf8", processCards);
+
+        function processCards(err, data) {
+            if (err) {
+                console.log("Error reading card file: " + err);
+                process.exit(2);
+            }
+            var cardDataFromFile = JSON.parse(data);;
+            console.log(cardDataFromFile);
+            mainMenu();
+        }
 
 }
-
-
 
 mainMenu();
