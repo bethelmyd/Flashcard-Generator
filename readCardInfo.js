@@ -5,27 +5,27 @@ var fs = require("fs");
 //var ClozeCard = require("./clozeCard.js");
 
 var CardRecordDataObject = function(){
-    this.cardDataFromFile = [];
+    this.cardDataFromFile = null;
 }
 
 
 
 var ReadCardObject = function()
 {
-    this.readCardsFromFile = function()
+    this.readCardsFromFile = function(cardRecordObject)
     {
         fs.readFile("basicCard.txt", "utf8", processCards);
-    };
 
-    function processCards(err, data) {
-        if (err) {
-            console.log("Error reading card file: " + err);
-            process.exit(2);
+        function processCards(err, data) {
+            if (err) {
+                console.log("Error reading card file: " + err);
+                process.exit(2);
+            }
+            cardRecordObject.cardDataFromFile = JSON.parse(data);;
+            console.log(cardRecordObject.cardDataFromFile);
+            //dumpData(data);
         }
-        var cardRecordObject = new CardRecordDataObject();
-        cardRecordObject.cardDataFromFile.push(data);
-        //dumpData(data);
-    }
+    };
 
     function dumpData(data){
         // console.log(data);

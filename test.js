@@ -6,10 +6,10 @@
 
 "use strict";
 var readCardExports = require("./readCardInfo.js");
-var readCard = new readCardExports['ReadCardObject']();
 var cardData = new readCardExports['CardRecordDataObject']();
+var readCard = new readCardExports['ReadCardObject']();
 
-readCard.readCardsFromFile();
+readCard.readCardsFromFile(cardData);
 console.log(cardData.cardDataFromFile);
 
     function dumpData(data){

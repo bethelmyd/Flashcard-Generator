@@ -1,0 +1,44 @@
+     this.addCard = function(){
+         var jsonObjectString = "{";
+         jsonObjectString += '"front":"' + this.front + '","back":"' + this.back + '"';
+         jsonObjectString += "}";
+         this.basicCards.push(JSON.parse(jsonObjectString));
+     };
+     this.saveCards = function(){
+         var path = "./basicCard.txt";
+         console.log(this.basicCards);
+         var cardObjectArrayString = "[" + this.basicCards.toString() + "]";  convert to an array of JSON objects
+         fs.appendFile(path,cardObjectArrayString,handleError);
+     };
+
+     this.getCards = function(){
+         return this.basicCards;
+     };
+    
+     function handleError(err){
+         if(err){
+             console.log("Basic flash card write error: " + err);
+             process.exit(1);
+         }
+     };
+
+    this.addCard = function(){
+        var jsonObjectString = "{";
+        jsonObjectString += '"cloze":"' + this.cloze + '","rest":"...' + this.rest + '"';
+        jsonObjectString += "}";
+        clozeCards.push(jsonObjectString);
+    };
+
+    this.saveCards = function(){
+        var path = "./clozeCard.txt";
+        console.log(clozeCards);
+        var cardObjectArrayString = "[" + clozeCards.toString() + "]";  //convert to an array of JSON objects
+        fs.appendFile(path,cardObjectArrayString,handleError);
+    };
+    
+    function handleError(err){
+        if(err){
+            console.log("Cloze flash card write error: " + err);
+            process.exit(1);
+        }
+    };
