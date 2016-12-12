@@ -21,14 +21,14 @@ var CardDeck = function()
     };
 };
 
-var deck = new CardDeck();
-var card = new BasicFlashCard("Name a 70's group from Sweden?", "ABBA");
-deck.addCard(card);
-card = new BasicFlashCard("Name a 70's group from Sweden?", "ABBA");
-deck.addCard(card);
-card = new ClozeFlashCard("ABBA", "is a 70's group from Sweden.");
-deck.addCard(card);
-var cards = deck.getCards();
-for(var card of cards){
-    console.log(JSON.parse(JSON.stringify(card)));
-}
+// var deck = new CardDeck();
+// var card = new BasicFlashCard("Name a 70's group from Sweden?", "ABBA");
+// deck.addCard(card);
+// card = new BasicFlashCard("Name a 70's group from Sweden?", "ABBA");
+// deck.addCard(card);
+// card = new ClozeFlashCard("ABBA", "is a 70's group from Sweden.");
+// deck.addCard(card);
+// var cards = deck.getCards();
+// for(var card of cards){
+//     console.log(JSON.parse(JSON.stringify(card)));
+// }
