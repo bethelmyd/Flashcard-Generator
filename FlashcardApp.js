@@ -149,7 +149,9 @@ function writeToFile(){
                 console.log("Flash card write error: " + err);
                 process.exit(1);
             }
-        mainMenu();
+            //clear the current deck for the next time
+            deck.clearDeck();
+            mainMenu();
         });
     }
 }
