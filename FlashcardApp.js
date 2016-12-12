@@ -5,12 +5,14 @@ var BasicFlashCard = require("./basicCard.js");
 var ClozeFlashCard = require("./clozeCard.js");
 var CardDeck = require("./CardDeck.js");
 
+var deck = new CardDeck();
+
 function mainMenu()
 {
     inquirer.prompt([
         {
             name:"choice",
-            choices: ["Write Card", "Read Cards"],
+            choices: ["Write Card", "Read Cards", "Exit"],
             type: "list",
             message: "Please make a choice:"
 
@@ -25,8 +27,12 @@ function processSelection(whatToDo){
     if (whatToDo.choice === "Write Card"){
         whichTypeOfCard();
     }
-    else{
+    else if (whatToDo.choice === "Read Cards"){
         readCards();
+    }
+    else{
+        console.log("Bye!");
+        process.exit(0);
     }
 
 }
@@ -36,17 +42,11 @@ function whichTypeOfCard()
     inquirer.prompt([
         {
             name: "cardType",
-            message: "Which type of card would you like to create? ",
+            message: "Which type of card would you like to create? (Select none to quit data entry.)",
             type: "list",
-            choices: ["Basic", "Cloze"]
+            choices: ["Basic", "Cloze", "None"]
         }
     ]).then(getCardInfo);
-
-}
-
-
-function readCards()
-{
 
 }
 
@@ -66,9 +66,9 @@ function getCardInfo(whichTypeOfCard){
                 type: "input",
             
             }
-        ]).then(writeToFile);
+        ]).then(addBasicToDeck);
     }
-    else{
+    else if (whichTypeOfCard.cardType == "Cloze"){
         inquirer.prompt([
             {
                 name: "cloze",
@@ -81,14 +81,40 @@ function getCardInfo(whichTypeOfCard){
                 type: "input",
             
             }
-        ]).then(writeToFile);        
+        ]).then(addClozeToDeck);        
+    }
+    else{
+        writeToFile();
+        console.log("Bye!");
+        process.exit(0);
     }
 
 }
 
-function writeToFile(item){
-
-    console.log(item);
+function addBasicToDeck(item){
+    var basicCard = new BasicFlashCard(item.front, item.back);
+    //console.log(JSON.parse(JSON.stringify(basicCard)));
+    deck.addCard(basicCard);
+    whichTypeOfCard();
 }
+
+function addClozeToDeck(item){
+    var clozeCard = new ClozeFlashCard(item.cloze, item.rest);
+    //console.log(JSON.parse(JSON.stringify(clozeCard)));
+    deck.addCard(clozeCard);
+    whichTypeOfCard();
+}
+
+function writeToFile(){
+    console.log(deck.getCards());
+}
+
+
+function readCards()
+{
+
+}
+
+
 
 mainMenu();

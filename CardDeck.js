@@ -21,6 +21,8 @@ var CardDeck = function()
     };
 };
 
+module.exports = CardDeck;
+
 // var deck = new CardDeck();
 // var card = new BasicFlashCard("Name a 70's group from Sweden?", "ABBA");
 // deck.addCard(card);
