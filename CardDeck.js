@@ -9,6 +9,13 @@ var CardDeck = function()
     this.addCard = function(card){
         this.cards.push(card);
     };
+    this.mergeDecks = function(otherDeck)
+    {
+        //attach the array in the other deck to the end of the array in this deck
+        this.cards = this.cards.concat(otherDeck.getCards());
+  //      console.log(JSON.parse(JSON.stringify(this.getCards())));
+        return this;
+    };
     this.getCard = function(index){
         if(index < 0 || index >= this.cards.length) return null;
         return this.cards[index];
@@ -18,6 +25,9 @@ var CardDeck = function()
     };
     this.getCards = function(){
         return this.cards;
+    };
+    this.clearDeck = function(){
+        this.cards = [];
     };
 };
 

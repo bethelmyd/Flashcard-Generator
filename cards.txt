@@ -1,1 +1,0 @@
-[{"front":"q","back":"w"},{"cloze":"e","rest":"r"}]

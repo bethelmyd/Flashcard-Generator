@@ -104,14 +104,54 @@ function addClozeToDeck(item){
 }
 
 function writeToFile(){
-    console.log(JSON.parse(JSON.stringify(deck.getCards())));
-    fs.appendFile("cards.txt",JSON.stringify(deck.getCards()), function(err){
-        if(err){
-            console.log("Flash card write error: " + err);
-            process.exit(1);
+    //Read everything in from file first because if we append to file with this data format, it will screw up the JSON object
+    fs.readFile("cards.txt", "utf8", mergeArrays);
+
+    function mergeArrays(err, data)  //this 
+    {
+        if(err)
+        {
+            console.log("Error reading card file: " + err);
+            process.exit(2);
         }
-    mainMenu();
-    });
+        if(data !== null && data.length != 0 )
+        {
+            var cardDataFromFile = JSON.parse(data);
+            var oldDeck = new CardDeck();
+            for(var i = 0; i < cardDataFromFile.length; i++)
+            {
+                var cardObject = cardDataFromFile[i];
+                var card = null;
+                if(cardObject.hasOwnProperty('front')){
+                    card = new BasicFlashCard(cardObject['front'], cardObject['back']);
+                }
+                else{
+                    card = new ClozeFlashCard(cardObject['cloze'], cardObject['rest']);
+                }
+                
+                oldDeck.addCard(card);
+            }//end loop
+            // console.log(JSON.parse(JSON.stringify(oldDeck.getCards())));
+            // console.log(JSON.parse(JSON.stringify(deck.getCards())));
+            
+            //attach new deck to old deck and replace deck with merged deck
+            // if (deck == null)
+            //     deck = oldDeck;
+            // else
+                deck = oldDeck.mergeDecks(deck);
+
+//            console.log(JSON.parse(JSON.stringify(deck.getCards())));
+        }
+
+        //console.log(JSON.parse(JSON.stringify(deck.getCards())));
+        fs.writeFile("cards.txt",JSON.stringify(deck.getCards()), function(err){
+            if(err){
+                console.log("Flash card write error: " + err);
+                process.exit(1);
+            }
+        mainMenu();
+        });
+    }
 }
 
 
@@ -124,9 +164,26 @@ function readCards()
                 console.log("Error reading card file: " + err);
                 process.exit(2);
             }
-            var cardDataFromFile = JSON.parse(data);;
-            console.log(cardDataFromFile);
-            mainMenu();
+            if(data !== null && data.length != 0 )
+            {
+                var cardDataFromFile = JSON.parse(data);
+            // console.log(cardDataFromFile);
+                for(var i = 0; i < cardDataFromFile.length; i++)
+                {
+                    var cardObject = cardDataFromFile[i];
+                // console.log(JSON.parse(JSON.stringify(cardObject)));
+                for (var card in cardObject)
+                    {
+                        console.log(card + ": " + cardObject[card]);
+                    }
+                    console.log("-----------------------");
+                }
+                console.log("*********************");
+            }
+            else{
+                console.log("There is no card data in the file.");
+            }
+             mainMenu();
         }
 
 }
