@@ -105,7 +105,8 @@ function addClozeToDeck(item){
 }
 
 function writeToFile(){
-    console.log(deck.getCards());
+    console.log(JSON.parse(JSON.stringify(deck.getCards())));
+    
 }
 
 
