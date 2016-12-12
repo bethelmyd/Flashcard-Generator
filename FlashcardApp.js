@@ -85,8 +85,7 @@ function getCardInfo(whichTypeOfCard){
     }
     else{
         writeToFile();
-        console.log("Bye!");
-        process.exit(0);
+        mainMenu();
     }
 
 }
